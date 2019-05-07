@@ -1,8 +1,11 @@
 const https = require("https");
-const fs = require("fs");
+const fs = require("fs-extra");
 
-setInterval(() => {
-  ["/markets/huobi/dogeusdt/price", "markets/bittrex/dogebtc/price"].map(
+const PRICE_INFO_DIR = './src/back/price_history/'
+
+console.log('Much watch. So info.');
+// setInterval(() => {
+  ["/markets/huobi/dogeusdt/price", "/markets/bittrex/dogebtc/price"].map(
     (path, ix) => {
       https
         .request(
@@ -13,17 +16,21 @@ setInterval(() => {
             hostname: "api.cryptowat.ch"
           },
           res => {
-            var body = "";
+            let body = "";
             res.on("data", chunk => {
               body += chunk;
             });
             res.on("end", () => {
-              console.log(body.result);
+              console.log('Wow', body);
+              body = JSON.parse(body)
+              const currencyPair = ix ? "doge_btc" : "doge_usdt"
+              console.log(`${PRICE_INFO_DIR}${currencyPair}.json`)
+              fs.ensureFileSync(`${PRICE_INFO_DIR}${currencyPair}.json`)
               fs.writeFile(
-                `price_history/${ix ? "doge_btc" : "doge_usdt"}.json`,
+                `${PRICE_INFO_DIR}${currencyPair}.json`,
                 JSON.stringify(body.result),
                 err => {
-                  console.log(err);
+                  if (err) console.log(err);
                 }
               );
             });
@@ -31,9 +38,9 @@ setInterval(() => {
         )
         .on("error", err => {
           console.log(err);
-          fs.appendFile("logs/error.log", `${err}\n`)
+          fs.appendFile("./logs/error.log", `${err}\n`)
         })
         .end();
     }
   );
-}, 1000 * 60);
+// }, 1000 * 10);

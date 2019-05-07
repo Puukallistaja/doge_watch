@@ -7,19 +7,24 @@
     <title>DOGE.watch</title>
   </head>
   <body>
-    1 DOGE = <span class="price">1 DOGE</span>  
+    1 DOGE = <span class="price">1 DOGE</span>
+    <select>
+      <option value="volvo">DOGE</option>
+      <option value="saab">BTC</option>
+      <option value="mercedes">USD</option>
+    </select>
   </body>
   
   <script>
     ["doge_usdt.json", "doge_btc.json"].map(path => {
-      fetch(`../back/price_history/${path}`)
+      fetch(`./price_history/${path}`)
         .then(function(response) {
           return response.json();
         })
         .then(function(priceJson) {
           console.log(priceJson);
-          priceJson = JSON.parse(priceJson)
-          document.querySelector(".price").innerText = priceJson.result.price;
+          
+          document.querySelector(".price").innerText = parseFloat(priceJson.price).toFixed(8);
         });
     })
 
