@@ -20,11 +20,11 @@ const TEMPLATE = () =>
   }));
 
 const PRICE_INFO_DIR = "back/price_history/";
-const currentStoreFileName = new Date().toISOString().split("T")[0] + ".json";
+const currentStoreFileName = () => new Date().toISOString().split("T")[0] + ".json";
 const currentStore = (() => {
   try {
     return JSON.parse(
-      fs.readFileSync(`${PRICE_INFO_DIR}${currentStoreFileName}`)
+      fs.readFileSync(`${PRICE_INFO_DIR}${currentStoreFileName()}`)
     );
   } catch (error) {
     console.log("File not found, returning template");
@@ -63,7 +63,7 @@ setInterval(() => {
             });
 
             fs.writeFile(
-              PRICE_INFO_DIR + currentStoreFileName,
+              PRICE_INFO_DIR + currentStoreFileName(),
               JSON.stringify(currentStore),
               err => {
                 if (err) console.log(err);

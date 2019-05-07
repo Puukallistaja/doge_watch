@@ -8,26 +8,44 @@
   </head>
   <body>
     1 DOGE = <span class="price">1 DOGE</span>
-    <select onchange="switchCurrency()">
-      <option value="volvo">DOGE</option>
-      <option value="saab">BTC</option>
-      <option value="mercedes">USD</option>
+    <select>
+      <option value="DOGE">DOGE</option>
+      <option value="BTC">BTC</option>
+      <option value="USDT">USD</option>
     </select>
   </body>
   
   <script>
-    ["doge_usdt", "doge_btc"].map(path => {
-      fetch(`../back/price_history/${path}.json`)
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(priceJson) {
-          console.log(priceJson);
-          
-          document.querySelector(".price").innerText = parseFloat(priceJson.price).toFixed(8);
-        });
-    })
-
+    let priceInfo = [{
+      currency: 'DOGE',
+      price: 1
+    }]
+    const currentStoreFileName = new Date().toISOString().split("T")[0] + ".json";
+    fetch(`../back/price_history/${currentStoreFileName}`)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(priceJson) {
+        if (priceJson.length) {
+          priceInfo = priceInfo.concat(priceJson)
+          localStorage.setItem('currencies', JSON.stringify(priceJson))
+        }
+      })
+      .catch(err => {
+        console.log(err, 'Will try to use old priceinfo')
+        priceInfo = localStorage.getItem('currencies')
+      })
+      .finally(addListeners)
+    
+    function addListeners() {
+      document.querySelector('select').addEventListener('change', event => {
+        try {
+          document.querySelector(".price").innerText = priceInfo.find(currency => currency.currency === event.target.value).price.toFixed(8)
+        } catch (error) {
+          console.log(error, '\n Failed to change price')
+        }
+      })
+    }
   </script>
 </html>
 
