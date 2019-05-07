@@ -2,9 +2,8 @@
   "name": "doge_watch",
   "version": "1.0.0",
   "description": "1 DOGE = 1 DOGE",
-  "main": "back/watcher.js",
   "scripts": {
-    "moon": "nodemon ./src/back/watcher.js --ignore 'src/back/price_history/'",
+    "moon": "nodemon back/watcher.js --ignore 'back/price_history/'",
     "build": "node build.js",
     "dev": "nodemon build.js", 
     "test": "test"

@@ -8,7 +8,7 @@
   </head>
   <body>
     1 DOGE = <span class="price">1 DOGE</span>
-    <select>
+    <select onchange="switchCurrency()">
       <option value="volvo">DOGE</option>
       <option value="saab">BTC</option>
       <option value="mercedes">USD</option>
@@ -16,8 +16,8 @@
   </body>
   
   <script>
-    ["doge_usdt.json", "doge_btc.json"].map(path => {
-      fetch(`./price_history/${path}`)
+    ["doge_usdt", "doge_btc"].map(path => {
+      fetch(`../back/price_history/${path}.json`)
         .then(function(response) {
           return response.json();
         })
