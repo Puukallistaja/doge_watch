@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>DOGE.watch</title>
+  </head>
+  <body>
+    1 DOGE = <span class="price">1 DOGE</span>  
+  </body>
+  
+  <script>
+    ["doge_usdt.json", "doge_btc.json"].map(path => {
+      fetch(`../back/price_history/${path}`)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(priceJson) {
+          console.log(priceJson);
+          priceJson = JSON.parse(priceJson)
+          document.querySelector(".price").innerText = priceJson.result.price;
+        });
+    })
+
+  </script>
+</html>
+

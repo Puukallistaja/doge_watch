@@ -1,2 +1,2 @@
-# doge_watch
+# DOGE Watch
 1 DOGE = 1 DOGE
