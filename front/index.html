@@ -7,45 +7,74 @@
     <title>DOGE.watch</title>
   </head>
   <body>
-    1 DOGE = <span class="price">1 DOGE</span>
-    <select>
-      <option value="DOGE">DOGE</option>
-      <option value="BTC">BTC</option>
-      <option value="USDT">USD</option>
-    </select>
+    <img
+      src="https://is4-ssl.mzstatic.com/image/thumb/Purple62/v4/bd/4e/c2/bd4ec217-a0fc-dbd8-58a2-ab054e84ffa7/source/512x512bb.jpg"
+      alt="Shibe"
+      srcset=""
+    />
+    <div>
+      1 DOGE = <span class="price">1.00000000</span>
+      <select>
+        <option value="DOGE">DOGE</option>
+        <option value="BTC">BTC</option>
+        <option value="USDT">USD</option>
+      </select>
+    </div>
   </body>
-  
   <script>
-    let priceInfo = [{
-      currency: 'DOGE',
-      price: 1
-    }]
-    const currentStoreFileName = new Date().toISOString().split("T")[0] + ".json";
+    let priceInfo = [
+      {
+        currency: "DOGE",
+        price: 1
+      }
+    ];
+    const currentStoreFileName =
+      new Date().toISOString().split("T")[0] + ".json";
     fetch(`../back/price_history/${currentStoreFileName}`)
       .then(function(response) {
         return response.json();
       })
       .then(function(priceJson) {
         if (priceJson.length) {
-          priceInfo = priceInfo.concat(priceJson)
-          localStorage.setItem('currencies', JSON.stringify(priceJson))
+          priceInfo = priceInfo.concat(priceJson);
+          localStorage.setItem("currencies", JSON.stringify(priceJson));
         }
       })
       .catch(err => {
-        console.log(err, 'Will try to use old priceinfo')
-        priceInfo = localStorage.getItem('currencies')
+        console.log(err, "Will try to use old priceinfo");
+        priceInfo = localStorage.getItem("currencies");
       })
-      .finally(addListeners)
-    
+      .finally(addListeners);
+
     function addListeners() {
-      document.querySelector('select').addEventListener('change', event => {
+      document.querySelector("select").addEventListener("change", event => {
         try {
-          document.querySelector(".price").innerText = priceInfo.find(currency => currency.currency === event.target.value).price.toFixed(8)
+          document.querySelector(".price").innerText = priceInfo
+            .find(currency => currency.currency === event.target.value)
+            .price.toFixed(8);
         } catch (error) {
-          console.log(error, '\n Failed to change price')
+          console.log(error, "\n Failed to change price");
         }
-      })
+      });
     }
   </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+    }
+    img {
+      flex: 0 0 auto
+    }
+    select {
+      border: none;
+      background: none;
+    }
+  </style>
 </html>
-
