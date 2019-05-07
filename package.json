@@ -1,0 +1,28 @@
+{
+  "name": "doge_watch",
+  "version": "1.0.0",
+  "description": "1 DOGE = 1 DOGE",
+  "main": "back/watcher.js",
+  "scripts": {
+    "build": "node build.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Puukallistaja/doge_watch.git"
+  },
+  "keywords": [
+    "doge",
+    "crypto",
+    "blockchain"
+  ],
+  "author": "Arto Haponen <haponen@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Puukallistaja/doge_watch/issues"
+  },
+  "homepage": "https://github.com/Puukallistaja/doge_watch#readme",
+  "dependencies": {
+    "fs-extra": "^7.0.1"
+  }
+}
