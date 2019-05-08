@@ -30,7 +30,7 @@
     ];
     const currentStoreFileName =
       new Date().toISOString().split("T")[0] + ".json";
-    fetch(`../back/price_history/${currentStoreFileName}`)
+    fetch(`price_history/${currentStoreFileName}`)
       .then(function(response) {
         return response.json();
       })
