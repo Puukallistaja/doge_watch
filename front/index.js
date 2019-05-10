@@ -33,3 +33,6 @@ function addListeners() {
     }
   });
 }
+
+import motionDetector from './scripts/movementDetector.js'
+
