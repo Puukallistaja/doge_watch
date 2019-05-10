@@ -1,6 +1,8 @@
 const https = require("https");
 const fs = require("fs-extra");
 
+const build = require('../build')
+
 const QUOTES = [
   {
     currency: "BTC",
@@ -67,6 +69,7 @@ setInterval(() => {
               JSON.stringify(currentStore),
               err => {
                 if (err) console.log(err);
+                else build()
               }
             );
           });
