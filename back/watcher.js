@@ -23,6 +23,7 @@ const TEMPLATE = () =>
 
 const PRICE_INFO_DIR = "back/price_history/";
 const currentStoreFileName = () => new Date().toISOString().split("T")[0] + ".json";
+
 const currentStore = (() => {
   try {
     return JSON.parse(
@@ -34,7 +35,6 @@ const currentStore = (() => {
   }
 })();
 
-console.log("Much watch. So info.");
 setInterval(() => {
   QUOTES.map(quote => {
     https
